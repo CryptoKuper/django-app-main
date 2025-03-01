@@ -1,0 +1,27 @@
+{% extends 'recipeapp/base.html' %}
+
+{% block title %}
+Изменить ингредиент
+{% endblock %}
+
+{% block body %}
+
+<div class="fixed-container">
+    <p class="section-header">Внести изменения в ингредиент</p>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">
+            Изменить!
+        </button>
+    </form>
+    <br>
+<div>
+    <a href="{% url 'recipeapp:ingredient_details' pk=object.pk %}"
+    >Вернуться на страницу ингредиента <{{ object.name }}></a>
+</div>
+</div>
+
+{% endblock %}

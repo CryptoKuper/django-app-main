@@ -1,0 +1,24 @@
+{% extends 'recipeapp/base.html' %}
+
+{% block title %}
+Подтвердить удаление {{ object.name }}
+{% endblock %}
+
+{% block body %}
+
+<div class="fixed-container">
+    <h1>Вы уверены, что хотите заархивировать этот ингредиент? {{ object.name }}?</h1>
+    <br>
+    <a href="{% url 'recipeapp:ingredient_details' pk=ingredient.pk %}"
+    >Назад на страницу ингредиента #{{ object.pk }}</a>
+    <br>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            {{ from.as_p }}
+            <button type="submit">В архив!</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

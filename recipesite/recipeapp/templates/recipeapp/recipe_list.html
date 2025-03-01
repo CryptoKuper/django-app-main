@@ -1,0 +1,53 @@
+{% extends 'recipeapp/base.html' %}
+
+{% block title %}
+Cписок рецептов
+{% endblock %}
+
+{% block body %}
+
+<div class="fixed-container">
+    <p class="section-header">Список всех рецептов:</p>
+    {% if object_list %}
+    {% for recipe in object_list %}
+    <div class="recipes-list">
+        <div class="recipe-data">
+            <p><a href="{% url 'recipeapp:recipe_details' pk=recipe.pk %}"
+            ><b>Рецепт #{{ recipe.pk }}</b></a></p>
+            <a id="a-recipe-name" href="{% url 'recipeapp:recipe_details' pk=recipe.pk %}">
+                <p class="recipe-name">{{ recipe.name }}</p>
+            </a>
+
+            <p><b>Время приготовления (мин):</b> {{ recipe.cooking_time_min }}</p>
+            <p><b>Автор рецепта:</b> {% firstof recipe.author.first_name recipe.author.username %}</p>
+            <!--            <div>-->
+            <!--                <b>Ингредиенты для рецепта:</b>-->
+            <!--                <ul>-->
+            <!--                    {% for ingredient in recipe.ingredients.all %}-->
+            <!--                    <li>{{ ingredient.name }}</li>-->
+            <!--                    {% endfor %}-->
+            <!--                </ul>-->
+            <!--            </div>-->
+        </div>
+        <div>
+            {% if recipe.preview %}
+            <a href="{% url 'recipeapp:recipe_details' pk=recipe.pk %}">
+                <img src="{{ recipe.preview.url }}" alt="{{ recipe.preview.name }}">
+            </a>
+
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h3>Здесь пока нет рецептов!</h3>
+    {% endif %}
+    <br>
+    <div>
+        <a href="{% url 'recipeapp:recipe_create' %}">
+            Создать новый рецепт
+        </a>
+    </div>
+</div>
+
+{% endblock %}

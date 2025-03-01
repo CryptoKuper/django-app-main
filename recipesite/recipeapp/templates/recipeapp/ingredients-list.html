@@ -1,0 +1,46 @@
+{% extends 'recipeapp/base.html' %}
+
+<!--{% load i18n %}-->
+
+{% block title %}
+Список ингредиентов
+{% endblock %}
+
+{% block body %}
+
+<div class="fixed-container">
+    <p class="section-header">Список всех ингредиентов:</p>
+    {% if ingredients %}
+    {% for ingredient in ingredients %}
+    <div class="ingredients-list">
+        <div>
+            <a class="ingred-list-name" href="{% url 'recipeapp:ingredient_details' pk=ingredient.pk %}">
+                {{ ingredient.name }}</a>
+        </div>
+        <div class="ingred-list-img-div">
+            {% if ingredient.preview %}
+            <a href="{% url 'recipeapp:ingredient_details' pk=ingredient.pk %}">
+                <img class="ingred-list-img" src="{{ ingredient.preview.url }}" alt="{{ ingredient.preview.name }}">
+            </a>
+
+            {% endif %}
+        </div>
+        <div>
+            <b><small>Единица измерения:</small></b> {{ ingredient.measurement_unit }}
+        </div>
+    </div>
+    {% endfor %}
+    <br>
+    <div>
+        <a href="{% url 'recipeapp:ingredient_create' %}"
+        >Создать новый ингредиент</a>
+    </div>
+    {% else %}
+    {% url 'recipeapp:ingredient_create' as create_ingredient_url %}
+    <h3>Здесь пока нет ингредиентов!</h3>
+    <a href="{{ create_ingredient_url }}"
+    >Создать новый ингредиент</a>
+    {% endif %}
+</div>
+{% endblock %}
+

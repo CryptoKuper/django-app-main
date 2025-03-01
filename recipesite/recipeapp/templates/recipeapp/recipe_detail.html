@@ -1,0 +1,43 @@
+{% extends 'recipeapp/base.html' %}
+
+{% block title %}
+Рецепт #{{ object.pk }} details
+{% endblock %}
+
+{% block body %}
+<div class="fixed-container">
+    <p class="section-header">Рецепт #{{ object.pk }}</p>
+    <div class="recipe-detail">
+        <div>
+            <h2><span class="recipe-name">{{ object.name }}</span></h2></p>
+            <p><b>Время приготовления (мин):</b> {{ object.cooking_time_min }}</p>
+            <p><b>Автор рецепта:</b> {% firstof object.author.first_name object.author.username %}</p>
+
+            <b>Ингредиенты для рецепта:</b>
+            <ul>
+                {% for ingredient in object.ingredients.all %}
+                <li>{{ ingredient.name }}</li>
+                {% endfor %}
+            </ul>
+            <p><b>Как приготовить:</b> {{ object.description }}</p>
+
+        </div>
+        {% if recipe.preview %}
+        <div>
+            <img src="{{ recipe.preview.url }}" alt="{{ recipe.preview.name }}">
+        </div>
+        {% endif %}
+
+    </div>
+    <br>
+    {% if recipe.author == user %}
+    <div>
+        <p><a href="{% url 'recipeapp:recipe_update' pk=recipe.pk %}">Редактировать рецепт</a></p>
+        <p><a href="{% url 'recipeapp:recipe_delete' pk=recipe.pk %}">Удалить рецепт</a></p>
+    </div>
+    {% endif %}
+    <div>
+        <a href="{% url 'recipeapp:recipes_list' %}">Вернуться к списку всех рецептов</a>
+    </div>
+</div>
+{% endblock %}

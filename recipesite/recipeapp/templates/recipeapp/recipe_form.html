@@ -1,0 +1,33 @@
+{% extends 'recipeapp/base.html' %}
+
+{% block title %}
+Создать рецепт
+{% endblock %}
+
+{% block body %}
+
+<div class="fixed-container">
+    <p class="section-header">Создать новый рецепт</p>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+        <div>
+            <p class="long-warning">* В списке ингредиентов нет нужного? <br>
+                Завершите создание рецепта, перейдите на страничку с ингредиентами и добавьте его там. <br>
+                После этого вы можете вернуться и отредактировать ваш рецепт, добавив в него нужный ингредиент.</p>
+
+        </div>
+        <button type="submit">
+            Создать
+        </button>
+    </form>
+    <br>
+    <div>
+        <a href="{% url 'recipeapp:recipes_list' %}">
+            Назад к списку рецептов
+        </a>
+    </div>
+</div>
+
+{% endblock %}
