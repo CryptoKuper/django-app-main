@@ -1,0 +1,27 @@
+{% extends 'recipeapp/base.html' %}
+
+{% block title %}
+Сайт рецептов
+{% endblock %}
+
+{% block body %}
+<div class="section-index-top-href"><a href="{% url 'recipeapp:recipes_list' %}">Посмотреть все рецепты</a></div>
+<ul class="hr">
+    {% for recipe in recipes %}
+    <li>
+        <div>
+            <div>
+                <a href="{% url 'recipeapp:recipe_details' pk=recipe.pk %}">{{ recipe.name }}</a>
+            </div>
+            {% if recipe.preview %}
+            <div>
+                <img src="{{ recipe.preview.url }}" alt="{{ recipe.preview.name }}">
+            </div>
+            {% endif %}
+        </div>
+    </li>
+    {% empty %}
+    Здесь пока нет рецептов...
+    {% endfor %}
+</ul>
+{% endblock %}

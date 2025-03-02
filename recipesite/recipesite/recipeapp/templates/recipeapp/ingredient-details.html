@@ -1,0 +1,35 @@
+{% extends 'recipeapp/base.html' %}
+
+{% block title %}
+Ингредиент #{{ ingredient.pk }}
+{% endblock %}
+
+{% block body %}
+
+<div class="fixed-container">
+    <p class="section-header">{{ ingredient.name }}</p>
+    <div class="ingred-details">
+        <div class="ingred-det-data">
+            <div><b>Описание:</b> <em>{{ ingredient.description }}</em></div>
+            <div><b>Единица измерения:</b> {{ ingredient.measurement_unit }}</div>
+            <div>Заархивирован: {{ ingredient.archived }}</div>
+        </div>
+        {% if ingredient.preview %}
+        <div class="ingred-det-img">
+            <img src="{{ ingredient.preview.url }}" alt="{{ ingredient.preview.name }}">
+        </div>
+        {% endif %}
+    </div>
+    <br>
+    <div>
+        <a href="{% url 'recipeapp:ingredient_update' pk=ingredient.pk %}">Внести изменения в ингредиент</a>
+    </div>
+    <div>
+        <a href="{% url 'recipeapp:ingredient_delete' pk=ingredient.pk %}">Удалить ингредиент</a>
+    </div>
+    <div>
+        <a href="{% url 'recipeapp:ingredients_list' %}">Назад в список ингредиентов</a>
+    </div>
+</div>
+
+{% endblock %}
